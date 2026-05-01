@@ -1,0 +1,31 @@
+帮我写一个参加Tsec黑客松自动化渗透比赛的程序，通过集成本地已经搭好的PentAGI平台来实现自动化渗透的功能，已有的信息如下：
+1. Tsec黑客松比赛平台的API文档：api.md，它说明了如何从平台获取题目信息、提示信息，如何启动/关闭实例，如何提交flag等。
+2. 本地PentAGI平台的地址为:https://localhost:8443，API文档为doc.json，它说明了如何下发任务给PentAGI，如何获取任务执行进度，以及如何获取结果。
+3. 访问PentAGI平台的token是：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiJLcHhDcnBBbUx3IiwicmlkIjoxLCJ1aWQiOjEsInVoYXNoIjoiNTUwZGY1MTdlZThkZmJiYzg2M2E5MDFjYTc5YzljMzgiLCJzdWIiOiJhcGlfdG9rZW4iLCJleHAiOjE3ODI3NDg4MDAsImlhdCI6MTc3NTQ1NjAwNH0.w4mgVPeeR3xR7CVJp0oHs4lWXqwZd5gDzuVv8zzvL-Q，通过HTTP头的Authorization字段进行认证。
+
+程序的基本流程：
+1. 从比赛平台获取题目信息。
+2. 选择未完成的题目，启动题目实例，获取实例入口地址。
+3. 根据题目描述和实例入口地址，在PentAGI中启动答题任务，进行自动化渗透，寻找flag。
+4. 定时查看PentAGI任务执行情况，在msglogs中找flag，如果找到flag，则将flag提交至比赛平台。注：flag格式为flag{XXX}
+5. 如果一定时间内没有找到flag，可查看比赛平台提示。通过PatchFlow接口将提示信息提交至PentAGI(action=input)，更新答题任务。
+6. 如果提示后一定时间内仍然没有找到flag，则停止该任务，关闭题目实例，挑战其他未完成的题目。
+7. 如果题目的flag全部找到，则停止该任务，关闭题目实例，挑战其他未完成的题目。
+8. 重复1-7的过程，直至题目全部完成。
+
+比赛策略：
+1. 比赛平台同时运行的实例数不能超过3个，启动的顺序应根据题目的难度值，按照先易后难的顺序进行。
+2. 比赛共有四个赛区，每个赛区有多个题目，一二赛区每个题目只有一个flag，三四赛区题目可能存在多层网络多个flag，题目的描述信息中会给出是第几赛区的题目。
+3. 要根据不同的赛区题型设计不同的提示词，每个赛区的题目类型如下：
+第一赛区：20+ SRC 真实场景，聚焦自动化众测与主流漏洞发现。
+第二赛区：典型 CVE、云安全及 AI 基础设施漏洞实测。
+第三赛区：多层网络与 OA 环境，考验多步攻击规划与权限维持。
+第四赛区：基础域渗透，模拟企业核心内网环境的推演。
+4. 根据题目的难易程度，分配不同的答题时间的阈值。难、中、易三个难度分别分配90分钟、60分钟、30分钟。
+
+程序功能要求：
+1. 程序全自动自主执行，执行期间不能有任何人工协助。程序要有容错机制，如果异常退出，要能从当前进度自动恢复。
+2. 程序只允许调用比赛平台和PentAGI平台的API接口，不要访问或调用其他任何接口。
+3. 程序的相关参数可灵活配置，包括比赛平台和PentAGI平台的地址、token、答题时间的阈值等。
+4. 程序要有详细的日志记录功能，方便赛后复盘。
+5. 程序要提供调试模式，方便调试和排查问题。

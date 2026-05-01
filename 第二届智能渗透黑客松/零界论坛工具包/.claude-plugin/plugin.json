@@ -1,0 +1,9 @@
+{
+  "name": "nu1l-zone-competition",
+  "description": "零界AI社交网络比赛全策略助手 - 覆盖四大赛题完整攻略，包含提示词注入、密钥交换、内容运营、信息监控策略。",
+  "version": "1.0.0",
+  "author": {
+    "name": "Tsec Hackathon Team",
+    "email": "team@example.com"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "_comment": "Tsec Hackathon Auto Pentest 配置文件模板 —— 复制为 config.json 并填写实际参数",
+
+  "contest": {
+    "_comment": "比赛平台配置",
+    "base_url": "http://10.0.0.44:8000/api",
+    "agent_token": "35c96839eab3e40e94af1b0bcdcc94e76c7f6bf95d8c9588741fcb2480027ee3"
+  },
+
+  "pentagi": {
+    "_comment": "本地 PentAGI 平台配置",
+    "base_url": "https://localhost:8443",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiJtcUdJQUFWWGJFIiwicmlkIjoxLCJ1aWQiOjEsInVoYXNoIjoiYWQ1OTUwYTlmZTUwNjBhY2UyMGM4NjFkNTk3MmYyZjgiLCJzdWIiOiJhcGlfdG9rZW4iLCJleHAiOjE3ODAxNTY4MDAsImlhdCI6MTc3NTgxMTM1M30.i7VQpQMQ1NIwg8sF8wy30m0NJ1KSDfriVZh64mLkTKI",
+    "providers": ["custom","deepseek","glm"],
+    "_providers_help": "LLM provider 列表。首次答题用第一个；超时重试时同时启动所有 provider，哪个先找到正确 flag 就停止其余。",
+    "verify_ssl": false
+  },
+
+  "settings": {
+    "_comment": "运行参数配置",
+
+    "max_instances": 3,
+    "_max_instances_help": "比赛平台同时运行的最大实例数（官方限制 3 个）",
+
+    "poll_interval": 60,
+    "_poll_interval_help": "轮询间隔秒数，建议 30~60s 以避免频繁请求",
+
+    "time_thresholds": {
+      "_comment": "各难度对应的最大答题时间（秒）",
+      "easy":   3600,
+      "medium": 5400,
+      "hard":   7200
+    },
+
+    "hint_wait_ratio": 0.5,
+    "_hint_wait_ratio_help": "在多少比例的时限后申请官方提示（0.5 = 50%时限后）",
+
+    "post_hint_wait_ratio": 0.5,
+    "_post_hint_wait_ratio_help": "申请提示后再等待多少比例的时限（超时则放弃该题）",
+
+    "state_file": "pentest_state.json",
+    "_state_file_help": "状态持久化文件路径，程序崩溃后从此文件恢复进度",
+
+    "challenges_file": "challenges.json",
+    "_challenges_file_help": "赛题全量数据实时保存路径，每轮轮询后更新",
+
+    "log_file": "pentest.log",
+    "_log_file_help": "日志文件路径",
+
+    "debug": false,
+    "_debug_help": "调试模式开关，true 时控制台输出 DEBUG 级别日志",
+
+    "request_delay": 0.4,
+    "_request_delay_help": "比赛平台 API 请求间隔（秒），防止触发限频（官方限制每秒 3 次）",
+
+    "msglog_page_size": 200,
+    "_msglog_page_size_help": "每次查询 PentAGI msglogs 的页面大小"
+
+  }
+}

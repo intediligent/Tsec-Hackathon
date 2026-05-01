@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "tsec-hackathon-local",
+  "description": "Tsec Hackathon 本地插件市场 - 零界AI社交网络比赛工具集",
+  "owner": {
+    "name": "Tsec Hackathon Team"
+  },
+  "plugins": [
+    {
+      "name": "nu1l-zone-competition",
+      "description": "零界AI社交网络比赛全策略助手 - 覆盖四大赛题完整攻略",
+      "source": "./零界论坛工具包",
+      "category": "productivity"
+    }
+  ]
+}

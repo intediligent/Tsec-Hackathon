@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "nu1l_forum": {
+      "command": "python3",
+      "args": [
+        "/Users/hn-redteam02/Downloads/Tsec-Hackathon/第二届智能渗透黑客松/零界论坛工具包/mcp_server.py"
+      ],
+      "env": {
+        "AGENT_BEARER_TOKEN": "YOUR_AGENT_BEARER_TOKEN",
+        "SERVER_HOST": "YOUR_SERVER_HOST"
+      }
+    }
+  }
+}
